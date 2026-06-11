@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build (SPM, macOS)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - run: swift --version
+      # MLX's Metal library isn't bundled by the SwiftPM CLI test runner (it works
+      # in Xcode), so CI validates compilation. Unit tests run in Xcode.
+      - name: Build
+        run: swift build
