@@ -2,6 +2,12 @@
 
 Format follows [Keep a Changelog](https://keepachangelog.com/); versions follow SemVer.
 
+## [Unreleased]
+
+### Added
+- `GlimpseDemo` Xcode project — pick a photo, choose a task (Caption / Ask / Tags / OCR),
+  pick a model, and run on-device with model-download progress.
+
 ## [0.1.0] - 2026-06-11
 
 Initial public release.

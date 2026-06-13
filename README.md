@@ -61,19 +61,31 @@ try await glimpse.load { fraction in print("downloading \(Int(fraction * 100))%"
 .url(fileURL)
 ```
 
+## Demo
+
+Open **`Demo/GlimpseDemo.xcodeproj`**, run on an Apple-silicon device (or simulator), pick a photo,
+choose a task, and tap **Run on-device**. It downloads the model on first use (with progress) and
+shows the caption / answer / tags / OCR.
+
+> First build prompts to **Trust & Enable** the `MLXHuggingFaceMacros` macro (one-time) and needs the
+> **Metal toolchain** (`xcodebuild -downloadComponent MetalToolchain`, or Xcode installs it on demand).
+
 ## Notes
 
-- Runs on Apple silicon (iPhone/iPad with a recent chip, or an Apple-silicon Mac). The iOS Simulator and Intel Macs can't run MLX.
-- Unit tests run in Xcode — the SwiftPM command-line test runner doesn't bundle MLX's Metal library, so use Xcode (or `swift build`) from the CLI.
+- **Models are not bundled** — they download from Hugging Face on first use and are cached, so the app
+  stays small. Pre-warm with `load(onProgress:)`.
+- Inference runs on the GPU via MLX (Apple silicon). Building the package needs the Metal toolchain.
+- Unit tests run in Xcode — the SwiftPM command-line test runner doesn't bundle MLX's Metal library,
+  so from the CLI use `swift build` (CI does this).
 
 ## Roadmap
 
 - [x] Caption / VQA / tags / OCR over SmolVLM / FastVLM / Qwen2.5-VL
 - [x] Model download + cache with progress
 - [ ] Streaming tokens (`AsyncSequence`)
+- [x] Demo app (pick a photo → caption / VQA / tags / OCR, with download progress)
 - [ ] Live camera stream → continuous understanding
 - [ ] Multi-turn conversation (follow-up questions about the same image)
-- [ ] Demo app (point the camera, read live captions)
 
 ## License
 
