@@ -1,17 +1,17 @@
 //
 //  VisionController.swift
-//  GlimpseDemo
+//  OnDeviceVLMSDKDemo
 //
 //  Created by Nazar Kozak on 12.06.2026.
 //
 
 import SwiftUI
-import Glimpse
+import OnDeviceVLMSDK
 
 @MainActor
 @Observable
 final class VisionController {
-    /// Models exposed in the demo (Glimpse's `VisionModel` has an associated value, so
+    /// Models exposed in the demo (OnDeviceVLM's `VisionModel` has an associated value, so
     /// we keep a small Hashable enum for the picker).
     enum Model: String, CaseIterable, Identifiable {
         case smolVLM = "SmolVLM"
@@ -35,7 +35,7 @@ final class VisionController {
         var id: String { rawValue }
     }
 
-    var model: Model = .smolVLM { didSet { glimpse = Glimpse(model: model.visionModel); loaded = false } }
+    var model: Model = .smolVLM { didSet { glimpse = OnDeviceVLM(model: model.visionModel); loaded = false } }
     var task: Task = .caption
     var question = "What is in this image?"
     var image: UIImage?
@@ -46,7 +46,7 @@ final class VisionController {
     var isBusy = false
     private(set) var loaded = false
 
-    private var glimpse = Glimpse(model: .smolVLM)
+    private var glimpse = OnDeviceVLM(model: .smolVLM)
 
     func run() async {
         guard let cgImage = image?.cgImage else { status = "Pick a photo first."; return }

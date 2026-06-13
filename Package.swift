@@ -1,7 +1,7 @@
 // swift-tools-version: 6.0
 //
 //  Package.swift
-//  Glimpse
+//  OnDeviceVLMSDK
 //
 //  Created by Nazar Kozak on 11.06.2026.
 //
@@ -9,13 +9,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "Glimpse",
+    name: "OnDeviceVLMSDK",
     platforms: [
         .iOS(.v17),
         .macOS(.v14)
     ],
     products: [
-        .library(name: "Glimpse", targets: ["Glimpse"])
+        .library(name: "OnDeviceVLMSDK", targets: ["OnDeviceVLMSDK"])
     ],
     dependencies: [
         .package(url: "https://github.com/ml-explore/mlx-swift-lm", branch: "main"),
@@ -24,7 +24,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "Glimpse",
+            name: "OnDeviceVLMSDK",
             dependencies: [
                 .product(name: "MLXVLM", package: "mlx-swift-lm"),
                 .product(name: "MLXLMCommon", package: "mlx-swift-lm"),
@@ -37,8 +37,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "GlimpseTests",
-            dependencies: ["Glimpse"]
+            name: "OnDeviceVLMSDKTests",
+            dependencies: ["OnDeviceVLMSDK"]
         )
     ]
 )

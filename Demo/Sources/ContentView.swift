@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  GlimpseDemo
+//  OnDeviceVLMSDKDemo
 //
 //  Created by Nazar Kozak on 12.06.2026.
 //
@@ -26,7 +26,7 @@ struct ContentView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Glimpse")
+            .navigationTitle("OnDeviceVLM")
             .onChange(of: pickerItem) { _, item in loadImage(item) }
         }
     }

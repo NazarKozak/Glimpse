@@ -1,4 +1,4 @@
-# Glimpse
+# OnDeviceVLMSDK
 
 ![Swift 6](https://img.shields.io/badge/Swift-6-orange.svg)
 ![Platforms](https://img.shields.io/badge/Platforms-iOS%2017%2B%20%7C%20macOS%2014%2B-blue.svg)
@@ -10,9 +10,9 @@
 It's a task-focused façade over Apple's [MLX Swift](https://github.com/ml-explore/mlx-swift-lm) VLM stack: you pick a model, you get `caption` / `ask` / `tags` / `readText`. WhisperKit, but for vision.
 
 ```swift
-import Glimpse
+import OnDeviceVLMSDK
 
-let glimpse = Glimpse(model: .smolVLM)
+let glimpse = OnDeviceVLM(model: .smolVLM)
 
 let caption = try await glimpse.caption(.cgImage(photo))
 let answer  = try await glimpse.ask("How many people are in this photo?", about: .url(fileURL))
@@ -20,9 +20,9 @@ let tags    = try await glimpse.tags(in: .cgImage(photo))      // ["dog", "park"
 let text    = try await glimpse.readText(in: .cgImage(receipt)) // OCR
 ```
 
-## Why Glimpse
+## Why OnDeviceVLMSDK
 
-On-device VLMs are finally good enough (Apple's **FastVLM**, **SmolVLM**, Qwen2.5-VL…), and MLX Swift can run them — but it's a low-level runtime. You still wire up model download, image preprocessing, prompt templating, tokenization, and session management yourself. Glimpse is that glue, with a task-shaped API:
+On-device VLMs are finally good enough (Apple's **FastVLM**, **SmolVLM**, Qwen2.5-VL…), and MLX Swift can run them — but it's a low-level runtime. You still wire up model download, image preprocessing, prompt templating, tokenization, and session management yourself. OnDeviceVLMSDK is that glue, with a task-shaped API:
 
 - 🔒 **Fully on-device** — private, offline, no key, no per-call cost.
 - 🧩 **Task presets** — `caption`, `ask` (VQA), `tags`, `readText` (OCR), or `describe` with your own prompt.
@@ -32,24 +32,24 @@ On-device VLMs are finally good enough (Apple's **FastVLM**, **SmolVLM**, Qwen2.
 ## Install
 
 ```swift
-.package(url: "https://github.com/NazarKozak/Glimpse.git", from: "0.1.0")
+.package(url: "https://github.com/NazarKozak/OnDeviceVLMSDK.git", from: "0.1.0")
 ```
 
-Add `"Glimpse"` to your target. Requires **iOS 17+ / macOS 14+** on **Apple silicon** (MLX runs on the GPU).
+Add `"OnDeviceVLMSDK"` to your target. Requires **iOS 17+ / macOS 14+** on **Apple silicon** (MLX runs on the GPU).
 
 ## Models
 
 ```swift
-Glimpse(model: .smolVLM)        // SmolVLM-Instruct 4-bit — small, fast (default)
-Glimpse(model: .fastVLM)        // Apple FastVLM — low latency
-Glimpse(model: .qwen2_5VL_3B)   // Qwen2.5-VL 3B 4-bit — stronger
-Glimpse(model: .custom(VLMRegistry.gemma3_4B_qat_4bit))  // any MLX configuration
+OnDeviceVLM(model: .smolVLM)        // SmolVLM-Instruct 4-bit — small, fast (default)
+OnDeviceVLM(model: .fastVLM)        // Apple FastVLM — low latency
+OnDeviceVLM(model: .qwen2_5VL_3B)   // Qwen2.5-VL 3B 4-bit — stronger
+OnDeviceVLM(model: .custom(VLMRegistry.gemma3_4B_qat_4bit))  // any MLX configuration
 ```
 
 The weights download from Hugging Face on first use and are cached. Pre-warm with progress:
 
 ```swift
-let glimpse = Glimpse(model: .smolVLM)
+let glimpse = OnDeviceVLM(model: .smolVLM)
 try await glimpse.load { fraction in print("downloading \(Int(fraction * 100))%") }
 ```
 
@@ -63,7 +63,7 @@ try await glimpse.load { fraction in print("downloading \(Int(fraction * 100))%"
 
 ## Demo
 
-Open **`Demo/GlimpseDemo.xcodeproj`**, run on an Apple-silicon device (or simulator), pick a photo,
+Open **`Demo/OnDeviceVLMSDKDemo.xcodeproj`**, run on an Apple-silicon device (or simulator), pick a photo,
 choose a task, and tap **Run on-device**. It downloads the model on first use (with progress) and
 shows the caption / answer / tags / OCR.
 

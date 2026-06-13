@@ -1,6 +1,6 @@
 //
-//  Glimpse.swift
-//  Glimpse
+//  OnDeviceVLM.swift
+//  OnDeviceVLM
 //
 //  Created by Nazar Kozak on 11.06.2026.
 //
@@ -57,11 +57,11 @@ public enum VisionInput: @unchecked Sendable {
 /// On-device image understanding.
 ///
 /// ```swift
-/// let glimpse = Glimpse(model: .smolVLM)
+/// let glimpse = OnDeviceVLM(model: .smolVLM)
 /// let caption = try await glimpse.caption(.cgImage(photo))
 /// let answer  = try await glimpse.ask("How many people are here?", about: .url(fileURL))
 /// ```
-public actor Glimpse {
+public actor OnDeviceVLM {
     public let model: VisionModel
     private var container: ModelContainer?
 
